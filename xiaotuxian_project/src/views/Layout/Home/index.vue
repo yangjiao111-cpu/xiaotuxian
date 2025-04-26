@@ -6,5 +6,8 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+div {
+  height: 1200px;
+}
 </style>

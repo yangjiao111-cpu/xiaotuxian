@@ -5,6 +5,7 @@
     "unplugin-vue-components": "^28.5.0"
   },
   "dependencies": {
+    "@vueuse/core": "^13.1.0",
     "element-plus": "^2.9.8"
   }
 }
