@@ -6,9 +6,13 @@ import HelloWorld from "@/components/HelloWorld.vue";
 <template>
   <el-button type="primary">Primary</el-button>
   <router-view />
+  <div class="test">测试</div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.test {
+  color: $priceColor;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
