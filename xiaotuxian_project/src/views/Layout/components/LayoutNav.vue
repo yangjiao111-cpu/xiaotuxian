@@ -24,8 +24,8 @@
         <!-- <template v-if="userStore.userInfo.token"> -->
         <li>
           <a href="javascript:;" @click="$router.push('/member')"
-            ><i class="iconfont icon-user"></i>{{ doro }}</a
-          >
+            ><i class="iconfont icon-user"></i
+          ></a>
         </li>
         <li>
           <el-popconfirm
