@@ -4,19 +4,40 @@
 import { useScroll } from "@vueuse/core";
 
 // // 封装请求
-// import { useCategoryStore } from "@/stores/categoryStore";
-
+import { useCategoryStore } from "@/stores/categoryStore";
 // // 纵向滚动的距离
 const { y } = useScroll(window);
 
 // // 使用pinia中的数据
-// const categoryStore = useCategoryStore();
+const categoryStore = useCategoryStore();
+// console.log(categoryStore.categoryList);
 </script>
 
 <template>
-  <div class="app-header-sticky" :class="{ show: y >= 78 }">
-    {{ y }}
-    <div class="container"></div>
+  <div class="app-header-sticky" :class="{ show: y > 78 }">
+    <div class="container">
+      <RouterLink class="logo" to="/" />
+      <!-- 导航区域 -->
+      <ul class="app-header-nav">
+        <li class="home">
+          <RouterLink to="/">首页</RouterLink>
+        </li>
+        <li
+          class="home"
+          v-for="item in categoryStore.categoryList"
+          :key="item.id"
+        >
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{
+            item.name
+          }}</RouterLink>
+        </li>
+      </ul>
+      <!-- <LayoutHeaderUl /> -->
+      <div class="right">
+        <RouterLink to="/">品牌</RouterLink>
+        <RouterLink to="/">专题</RouterLink>
+      </div>
+    </div>
   </div>
 </template>
 
