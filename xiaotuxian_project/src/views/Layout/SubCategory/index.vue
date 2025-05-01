@@ -1,15 +1,32 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { getCategoryFilterAPI } from "@/apis/category.js";
+import { getCategoryFilterAPI, getSubCategoryAPI } from "@/apis/category.js";
 import { useRoute } from "vue-router";
+import GoodsItem from "../Home/components/GoodsItem.vue";
 const route = useRoute();
-const categoryData = ref([]);
+// 获取面包屑导航数据
+const categoryData = ref({});
 const getCategoryFilter = async (id = route.params.id) => {
   const res = await getCategoryFilterAPI(id);
   categoryData.value = res.result;
 };
 onMounted(() => {
   getCategoryFilter();
+});
+// 获取基础列表数据渲染
+const goodList = ref([]);
+const reqData = ref({
+  categoryId: route.params.id,
+  page: 1,
+  pageSize: 20,
+  sortField: "publishTime",
+});
+const getGoodList = async () => {
+  const res = await getSubCategoryAPI(reqData.value);
+  goodList.value = res.result.items;
+};
+onMounted(() => {
+  getGoodList();
 });
 </script>
 
@@ -25,21 +42,17 @@ onMounted(() => {
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- <div class="sub-container">
+    <div class="sub-container">
       <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div
-        class="body"
-        v-infinite-scroll="load"
-        :infinite-scroll-disabled="disabled"
-      > -->
-    <!-- 商品列表-->
-    <!-- <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
-      </div> -->
-    <!-- </div> -->
+      <div class="body">
+        <!-- 商品列表-->
+        <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
+      </div>
+    </div>
   </div>
 </template>
 
