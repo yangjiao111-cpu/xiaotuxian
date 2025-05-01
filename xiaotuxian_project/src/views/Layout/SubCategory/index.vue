@@ -1,11 +1,22 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import { getCategoryFilterAPI } from "@/apis/category.js";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const categoryData = ref([]);
+const getCategoryFilter = async (id = route.params.id) => {
+  const res = await getCategoryFilterAPI(id);
+  categoryData.value = res.result;
+};
+onMounted(() => {
+  getCategoryFilter();
+});
 </script>
 
 <template>
   <div class="container">
-    这是二级分类
     <!-- 面包屑 -->
-    <!-- <div class="bread-container">
+    <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: `/category/${categoryData.parentId}` }"
@@ -13,7 +24,7 @@
         </el-breadcrumb-item>
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
-    </div> -->
+    </div>
     <!-- <div class="sub-container">
       <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
