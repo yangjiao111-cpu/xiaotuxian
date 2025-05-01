@@ -1,76 +1,132 @@
 <script setup>
+import HomePanel from "./HomePanel.vue";
 import { getGoodsAPI } from "@/apis/home";
 import { onMounted, ref } from "vue";
-import HomePanel from "./HomePanel.vue";
-const productList = ref([]);
-const getProduct = async () => {
+// import GoodsItem from "./GoodsItem.vue";
+
+// 获取数据列表
+const goodsProduct = ref([]);
+const getGoods = async () => {
   const res = await getGoodsAPI();
-  productList.value = res.result;
+  goodsProduct.value = res.result;
 };
-onMounted(() => {
-  getProduct();
-});
+
+onMounted(() => getGoods());
 </script>
 
 <template>
-  <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱">
-    <ul class="goods-list">
-      <li v-for="item in productList" :key="item.id">
-        <RouterLink :to="`/detail/${item.id}`">
-          <img v-img-lazy="item.picture" alt="" />
-          <p class="name">{{ item.name }}</p>
-          <p class="price">&yen;{{ item.price }}</p>
+  <div class="home-product">
+    <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
+      <div class="box">
+        <RouterLink class="cover" to="/">
+          <img v-img-lazy="cate.picture" />
+          <strong class="label">
+            <span>{{ cate.name }}馆</span>
+            <span>{{ cate.saleInfo }}</span>
+          </strong>
         </RouterLink>
-      </li>
-    </ul>
-  </HomePanel>
-  <!-- 下面是插槽主体内容模版
-  <ul class="goods-list">
-    <li v-for="item in newList" :key="item.id">
-      <RouterLink to="/">
-        <img :src="item.picture" alt="" />
-        <p class="name">{{ item.name }}</p>
-        <p class="price">&yen;{{ item.price }}</p>
-      </RouterLink>
-    </li>
-  </ul>
-  -->
+        <ul class="goods-list">
+          <li v-for="goods in cate.goods" :key="goods.id">
+            <GoodsItem :goods="goods" />
+            <RouterLink to="/" class="goods-item">
+              <img v-img-lazy="goods.picture" alt="" />
+              <p class="name ellipsis">{{ goods.name }}</p>
+              <p class="desc ellipsis">{{ goods.desc }}</p>
+              <p class="price">&yen;{{ goods.price }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+    </HomePanel>
+  </div>
 </template>
 
-
 <style scoped lang='scss'>
-.goods-list {
-  display: flex;
-  justify-content: space-between;
-  height: 406px;
-  li {
-    width: 306px;
-    height: 406px;
+.home-product {
+  background: #fff;
+  margin-top: 20px;
 
-    background: #f0f9f4;
-    transition: all 0.5s;
+  .sub {
+    margin-bottom: 2px;
 
-    &:hover {
-      transform: translate3d(0, -3px, 0);
-      box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
+    a {
+      padding: 2px 12px;
+      font-size: 16px;
+      border-radius: 4px;
+
+      &:hover {
+        background: $xtxColor;
+        color: #fff;
+      }
+
+      &:last-child {
+        margin-right: 80px;
+      }
+    }
+  }
+
+  .box {
+    display: flex;
+
+    .cover {
+      width: 240px;
+      height: 610px;
+      margin-right: 10px;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .label {
+        width: 188px;
+        height: 66px;
+        display: flex;
+        font-size: 18px;
+        color: #fff;
+        line-height: 66px;
+        font-weight: normal;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+
+        span {
+          text-align: center;
+
+          &:first-child {
+            width: 76px;
+            background: rgba(0, 0, 0, 0.9);
+          }
+
+          &:last-child {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.7);
+          }
+        }
+      }
     }
 
-    img {
-      width: 306px;
-      height: 306px;
-    }
+    .goods-list {
+      width: 990px;
+      display: flex;
+      flex-wrap: wrap;
 
-    p {
-      font-size: 22px;
-      padding-top: 12px;
-      text-align: center;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+      li {
+        width: 240px;
+        height: 300px;
+        margin-right: 10px;
+        margin-bottom: 10px;
 
-    .price {
-      color: $priceColor;
+        &:nth-last-child(-n + 4) {
+          margin-bottom: 0;
+        }
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
     }
   }
 }
