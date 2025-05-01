@@ -17,7 +17,7 @@ onMounted(() => getHotList());
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
           <!-- 图片懒加载，节省请求资源(用户视图看不到就不加载！) -->
-          <img :src="item.picture" alt="" />
+          <img v-img-lazy="item.picture" alt="" />
           <p class="name">{{ item.title }}</p>
           <p class="desc">{{ item.alt }}</p>
         </RouterLink>
