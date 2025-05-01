@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { getCategoryAPI } from "@/apis/category";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import { getBannerAPI } from "@/apis/home.js";
+import GoodsItem from "../Home/components/GoodsItem.vue";
 const route = new useRoute();
 const categoryData = ref({});
 const bannerList = ref([]);
