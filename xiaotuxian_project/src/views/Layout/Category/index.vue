@@ -7,8 +7,8 @@ import GoodsItem from "../Home/components/GoodsItem.vue";
 const route = new useRoute();
 const categoryData = ref({});
 const bannerList = ref([]);
-const getCategoryData = async () => {
-  const res = await getCategoryAPI(route.params.id);
+const getCategoryData = async (id = route.params.id) => {
+  const res = await getCategoryAPI(id);
   categoryData.value = res.result;
 };
 const getBanner = async () => {
@@ -19,8 +19,8 @@ onMounted(() => {
   getCategoryData();
   getBanner();
 });
-onBeforeRouteUpdate(() => {
-  console.log("路由更新了");
+onBeforeRouteUpdate((to) => {
+  getCategoryData(to.params.id);
 });
 </script>
 
