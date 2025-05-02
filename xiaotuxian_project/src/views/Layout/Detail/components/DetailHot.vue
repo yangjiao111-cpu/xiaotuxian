@@ -4,16 +4,15 @@ import { useRoute } from "vue-router";
 import { getHotGoodsAPI } from "@/apis/detail";
 const route = useRoute();
 const hotList = ref([]);
-const title = "默认标题";
-// defineProps({
-//     "hot-type":{
-//         type:String,
-//         defalut:'1'
-//     }
-// })
+const props = defineProps({
+  hotType: {
+    type: Number,
+  },
+});
+const title = props.hotType === 1 ? "24小时热榜" : "周热榜";
 const reqData = ref({
   id: route.params.id,
-  type: 1,
+  type: props.hotType,
   limit: 3,
 });
 const getHotList = async (reqData) => {
