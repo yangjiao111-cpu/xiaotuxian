@@ -1,9 +1,6 @@
 <script setup>
-import { ref } from "vue";
-const activeIndex = ref(0);
-function enterhandler(index) {
-  activeIndex.value = index;
-}
+import { ref, computed, watch } from "vue";
+import { useMouseInElement } from "@vueuse/core";
 // 图片列表;
 const imageList = [
   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
@@ -12,11 +9,54 @@ const imageList = [
   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg",
 ];
+// 小图切换大图
+const activeIndex = ref(0);
+function enterhandler(index) {
+  activeIndex.value = index;
+}
+// 获取鼠标相对位置
+const target = ref(null);
+const { elementX, elementY, isOutside } = useMouseInElement(target);
+// 计算属性写法
+// let left = computed(() => {
+//   if (elementX.value <= 100 || elementX.value >= 300) {
+//     return elementX.value <= 100 ? 0 : 200;
+//   } else return elementX.value - 100;
+// });
+// let top = computed(() => {
+//   if (elementY.value <= 100 || elementY.value >= 300) {
+//     return elementY.value <= 100 ? 0 : 200;
+//   } else return elementY.value - 100;
+// });
+// 监视写法
+let left = ref(0);
+let top = ref(0);
+let positionX = ref(0);
+let positionY = ref(0);
+watch([elementX, elementY], () => {
+  // 有效范围内控制滑块距离
+  // 横向
+  if (elementX.value > 100 && elementX.value < 300) {
+    left.value = elementX.value - 100;
+  }
+  // 处理边界
+  else {
+    left.value = elementX.value <= 100 ? 0 : 200;
+  }
+  // 纵向
+  if (elementY.value > 100 && elementY.value < 300) {
+    top.value = elementY.value - 100;
+  }
+  // 处理边界
+  else {
+    top.value = elementY.value <= 100 ? 0 : 200;
+  }
+});
 </script>
 
 
 <template>
-  <!-- {{ elementX }}, {{ elementY }}, {{ isOutside }} -->
+  <!-- {{ elementX.value }}, {{ elementY.value }}, {{ isOutside }} -->
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
@@ -25,7 +65,7 @@ const imageList = [
       <div
         class="layer"
         v-show="!isOutside"
-        :style="{ left: `0px`, top: `0px` }"
+        :style="{ left: `${left}px`, top: `${top}px` }"
       ></div>
     </div>
     <!-- 小图列表 -->
@@ -69,7 +109,6 @@ const imageList = [
 
   .large {
     position: absolute;
-    display: none;
     top: 0;
     left: 412px;
     width: 400px;
