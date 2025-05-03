@@ -4,7 +4,7 @@ import { useUserStore } from "@/stores/user";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useRouter } from "vue-router";
-const useUser = useUserStore();
+const userStore = useUserStore();
 // 准备表单对象
 const form = ref({
   // 12056258282 ~ 12056258293
@@ -48,7 +48,7 @@ const doLogin = () => {
     const { account, password } = form.value;
     // valid:所有表单都通过校验 才为true
     if (valid) {
-      useUser.getUserInfo({ account, password });
+      userStore.getUserInfo({ account, password });
       // 提示用户
       ElMessage({ type: "success", message: "登录成功" });
       // 跳转首页
