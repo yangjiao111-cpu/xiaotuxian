@@ -128,7 +128,7 @@ onMounted(() => {
                   <!-- 图片 -->
                   <img
                     v-for="img in goods.details.pictures"
-                    :src="img"
+                    v-img-lazy="img"
                     :key="img"
                     alt=""
                   />
