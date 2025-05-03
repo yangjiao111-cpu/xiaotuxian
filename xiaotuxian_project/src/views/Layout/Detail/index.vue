@@ -1,22 +1,46 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { getGoodsDeatilAPI } from "@/apis/detail.js";
+import { useCartStore } from "@/stores/cartStore.js";
 import { useRoute } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
 const route = useRoute();
 const goods = ref({});
+const cartStore = useCartStore();
 const getGoodsDetail = async (id = route.params.id) => {
   const res = await getGoodsDeatilAPI(id);
   goods.value = res.result;
-  console.log(res);
 };
+let skuObj = {};
 function skuChange(obj) {
-  console.log(obj);
+  skuObj = obj;
 }
 onMounted(() => {
   getGoodsDetail();
-  console.log(goods.value);
 });
+//count
+const count = ref(1);
+// 添加购物车
+const addCart = () => {
+  if (skuObj.skuId) {
+    // 规格已经选择 添加购物车
+    cartStore.addCart({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.picture,
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj,
+      selected: true,
+    });
+  } else {
+    // 规则未被选择 提示用户
+    ElMessage.warning("请选择规格");
+  }
+};
 </script>
 
 <template>
