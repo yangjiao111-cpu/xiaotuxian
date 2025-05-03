@@ -3,8 +3,6 @@ import { onMounted, ref } from "vue";
 import { getGoodsDeatilAPI } from "@/apis/detail.js";
 import { useRoute } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
-import XtxImageView from "@/components/ImageView/index.vue";
-import XtxSku from "@/components/XtxSku/index.vue";
 const route = useRoute();
 const goods = ref({});
 const getGoodsDetail = async (id = route.params.id) => {
