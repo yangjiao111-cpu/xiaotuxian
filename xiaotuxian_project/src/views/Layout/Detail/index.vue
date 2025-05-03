@@ -29,13 +29,14 @@ const addCart = () => {
     cartStore.addCart({
       id: goods.value.id,
       name: goods.value.name,
-      picture: goods.value.picture,
+      picture: goods.value.mainPictures[0],
       price: goods.value.price,
       count: count.value,
       skuId: skuObj.skuId,
-      attrsText: skuObj,
+      attrsText: skuObj.specsText,
       selected: true,
     });
+    ElMessage.success("添加成功");
   } else {
     // 规则未被选择 提示用户
     ElMessage.warning("请选择规格");
