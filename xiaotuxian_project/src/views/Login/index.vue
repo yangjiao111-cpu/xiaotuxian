@@ -1,9 +1,28 @@
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+import { useRouter } from "vue-router";
+const useUser = useUserStore();
 // 准备表单对象
 const form = ref({
-  account: "",
-  password: "",
+  // 12056258282 ~ 12056258293
+  // 账号，密码
+  // heima282 hm#qd@23!
+  // heima283 hm#qd@23!
+  // heima284 hm#qd@23!
+  // heima285 hm#qd@23!
+  // heima286 hm#qd@23!
+  // heima287 hm#qd@23!
+  // heima288 hm#qd@23!
+  // heima289 hm#qd@23!
+  // heima290 hm#qd@23!
+  // heima291 hm#qd@23!
+  // heima292 hm#qd@23!
+  // heima293 hm#qd@23!
+  account: "heima282",
+  password: "hm#qd@23!",
   agree: false,
 });
 // 准备规则对象
@@ -22,15 +41,25 @@ const rules = {
 };
 // 获取from实例做统一检验
 const formRef = ref(null);
+const router = useRouter();
 const doLogin = () => {
   // 调用实例方法
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
+    const { account, password } = form.value;
     // valid:所有表单都通过校验 才为true
     if (valid) {
+      useUser.getUserInfo({ account, password });
+      // 提示用户
+      ElMessage({ type: "success", message: "登录成功" });
+      // 跳转首页
+      router.replace("/");
     } else {
     }
   });
 };
+// 1.用户名和密码 只需要通过简单的配置（看文档的方式 - 复杂功能通过多个不同组件拆解）
+// 2.同意协议 自定义规则 validator:(rule,value,callback)=>{}
+// 3.统一校验 通过调用form实例的方法 validate -> true
 </script>
 
 
