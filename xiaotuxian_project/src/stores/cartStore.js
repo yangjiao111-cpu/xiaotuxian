@@ -17,9 +17,19 @@ export const useCartStore = defineStore('cart', () => {
         }
         // 未添加过 - 直接push
     }
+    function delCart(skuId) {
+        console.log('删除函数背调了');
+
+        cartList.value = cartList.value.filter((item) => {
+            return item.skuId !== skuId
+        })
+        console.log(cartList.value);
+
+    }
     return {
         cartList,
-        addCart
+        addCart,
+        delCart
     }
 }, {
     persist: true
