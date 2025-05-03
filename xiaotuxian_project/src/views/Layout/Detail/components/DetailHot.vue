@@ -17,8 +17,6 @@ const reqData = ref({
 });
 const getHotList = async (reqData) => {
   const res = await getHotGoodsAPI(reqData);
-  console.log(res);
-
   hotList.value = res.result;
 };
 onMounted(() => {
