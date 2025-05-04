@@ -4,6 +4,9 @@ const cartStore = useCartStore();
 const singleCheck = (item, selected) => {
   cartStore.singleCheck(item.skuId, selected);
 };
+const allCheck = (selected) => {
+  cartStore.allCheck(selected);
+};
 </script>
 
 <template>
