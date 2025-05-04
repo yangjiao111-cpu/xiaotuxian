@@ -2,11 +2,12 @@
 import { onMounted, ref } from "vue";
 import { getGoodsDeatilAPI } from "@/apis/detail.js";
 import { useCartStore } from "@/stores/cartStore.js";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 const route = useRoute();
+const router = useRouter();
 const goods = ref({});
 const cartStore = useCartStore();
 const getGoodsDetail = async (id = route.params.id) => {

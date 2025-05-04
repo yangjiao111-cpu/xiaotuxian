@@ -1,5 +1,7 @@
 <script setup>
 import { useCartStore } from "@/stores/cartStore";
+import { findNewCartListAPI } from "@/apis/cart";
+import { onMounted } from "vue";
 const cartStore = useCartStore();
 const singleCheck = (item, selected) => {
   cartStore.singleCheck(item.skuId, selected);
