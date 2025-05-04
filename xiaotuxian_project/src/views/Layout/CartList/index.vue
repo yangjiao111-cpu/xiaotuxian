@@ -1,6 +1,9 @@
 <script setup>
 import { useCartStore } from "@/stores/cartStore";
 const cartStore = useCartStore();
+const singleCheck = (item, selected) => {
+  cartStore.singleCheck(item.skuId, selected);
+};
 </script>
 
 <template>
