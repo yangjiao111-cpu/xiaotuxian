@@ -9,6 +9,9 @@ const singleCheck = (item, selected) => {
 const allCheck = (selected) => {
   cartStore.allCheck(selected);
 };
+const delCart = (skuId) => {
+  cartStore.delCart(skuId);
+};
 </script>
 
 <template>
@@ -67,6 +70,7 @@ const allCheck = (selected) => {
               <td class="tc">
                 <p>
                   <el-popconfirm
+                    @confirm="delCart(i.skuId)"
                     title="确认删除吗?"
                     confirm-button-text="确认"
                     cancel-button-text="取消"
