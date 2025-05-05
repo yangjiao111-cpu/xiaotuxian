@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', () => {
                 count: item.count
             }
         }))
-        cartStore.UpdateNewList()
+        cartStore.updateNewList()
     }
     // 退出时清除用户信息
     const clearUserInfo = () => {

@@ -9,7 +9,7 @@ export const useCartStore = defineStore('cart', () => {
     // 定义state - cartList
     const cartList = ref([])
     // 获取最新购物车列表
-    const UpdateNewList = async () => {
+    const updateNewList = async () => {
         const res = await findNewCartListAPI()
         cartList.value = res.result
     }
@@ -19,7 +19,7 @@ export const useCartStore = defineStore('cart', () => {
         if (isLogin.value) {
             // 登录之后的购物车逻辑
             await insertCartAPI({ skuId, count })
-            UpdateNewList()
+            updateNewList()
         }
         else {
             // 已添加过 - count+1
@@ -39,7 +39,7 @@ export const useCartStore = defineStore('cart', () => {
         if (isLogin.value) {
             //调用接口实现接口购物车中的删除功能
             await delCartAPI([skuId])
-            UpdateNewList()
+            updateNewList()
         }
         else {
             cartList.value = cartList.value.filter((item) => {
@@ -97,7 +97,7 @@ export const useCartStore = defineStore('cart', () => {
         delCart,
         singleCheck,
         allCheck,
-        UpdateNewList,
+        updateNewList,
         clearCart
     }
 }, {
