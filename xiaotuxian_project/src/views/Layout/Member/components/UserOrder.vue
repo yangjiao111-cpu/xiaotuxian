@@ -25,6 +25,11 @@ const getOrderList = async () => {
 onMounted(() => {
   getOrderList();
 });
+// tab切换
+const tabChange = (type) => {
+  params.value.orderState = type;
+  getOrderList();
+};
 </script>
 
 <template>
