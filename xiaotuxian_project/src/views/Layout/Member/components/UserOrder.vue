@@ -1,6 +1,30 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getUserOrderAPI } from "@/apis/order";
+
+// tab列表
+const tabTypes = [
+  { name: "all", label: "全部订单" },
+  { name: "unpay", label: "待付款" },
+  { name: "deliver", label: "待发货" },
+  { name: "receive", label: "待收货" },
+  { name: "comment", label: "待评价" },
+  { name: "complete", label: "已完成" },
+  { name: "cancel", label: "已取消" },
+];
 const orderList = ref([]);
+const params = ref({
+  orderState: 0,
+  page: 1,
+  pageSize: 2,
+});
+const getOrderList = async () => {
+  const res = await getUserOrderAPI(params.value);
+  orderList.value = res.result.items;
+};
+onMounted(() => {
+  getOrderList();
+});
 </script>
 
 <template>
@@ -50,7 +74,7 @@ const orderList = ref([]);
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ fomartPayState(order.orderState) }}</p>
+                <p>12</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
