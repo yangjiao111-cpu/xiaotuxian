@@ -13,6 +13,7 @@ const tabTypes = [
   { name: "cancel", label: "已取消" },
 ];
 const orderList = ref([]);
+const total = ref(0);
 const params = ref({
   orderState: 0,
   page: 1,
@@ -21,6 +22,7 @@ const params = ref({
 const getOrderList = async () => {
   const res = await getUserOrderAPI(params.value);
   orderList.value = res.result.items;
+  total.value = res.result.counts;
 };
 onMounted(() => {
   getOrderList();
@@ -28,6 +30,11 @@ onMounted(() => {
 // tab切换
 const tabChange = (type) => {
   params.value.orderState = type;
+  getOrderList();
+};
+// 页数切换
+const pageChange = (page) => {
+  params.value.page = page;
   getOrderList();
 };
 </script>
