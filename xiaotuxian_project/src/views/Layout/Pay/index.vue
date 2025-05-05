@@ -2,11 +2,16 @@
 import { useRoute } from "vue-router";
 import { getOrderAPI } from "@/apis/pay";
 import { onMounted, ref } from "vue";
+import { useCountDown } from "@/composables/useCountDown.js";
+// 倒计时
+const { formateTime, start } = useCountDown();
 const route = useRoute();
 const payInfo = ref({});
 const getPayInfo = async (id) => {
   const res = await getOrderAPI(id);
   payInfo.value = res.result;
+  //拿到数据后开始倒计时
+  start(payInfo.value.countdown);
 };
 onMounted(() => {
   getPayInfo(route.query.id);
@@ -37,7 +42,7 @@ const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redire
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
           <p>
-            支付还剩 <span>{{ 24 }}</span
+            支付还剩 <span>{{ formateTime }}</span
             >, 超时后将取消订单
           </p>
         </div>
