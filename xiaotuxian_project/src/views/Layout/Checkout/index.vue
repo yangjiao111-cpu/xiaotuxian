@@ -1,8 +1,9 @@
 <script setup>
 import { getCheckInfoAPI } from "@/apis/checkout";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 const checkInfo = ref({}); //订单对象
 const curAddress = ref({}); //地址对象
+const activeAddress = ref({}); //当前激活地址
 const getCheckInfo = async () => {
   const res = await getCheckInfoAPI();
   checkInfo.value = res.result;
@@ -11,10 +12,20 @@ const getCheckInfo = async () => {
     (item) => item.isDefault === 0
   );
   curAddress.value = item;
+  activeAddress.value = item;
 };
 onMounted(() => {
   getCheckInfo();
 });
+const showDialog = ref(false);
+//切换地址
+const switchAddress = (item) => {
+  activeAddress.value = item;
+};
+const confirm = () => {
+  curAddress.value = activeAddress.value;
+  showDialog.value = false;
+};
 </script>
 
 <template>
@@ -150,7 +161,7 @@ onMounted(() => {
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button>取消</el-button>
+        <el-button @click="showDialog = false">取消</el-button>
         <el-button type="primary" @click="confirm">确定</el-button>
       </span>
     </template>
