@@ -30,7 +30,7 @@ onMounted(() => {
     <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
-      to="/"
+      :to="`/detail/${item.id}`"
       class="goods-item"
       v-for="item in hotList"
       :key="item.id"

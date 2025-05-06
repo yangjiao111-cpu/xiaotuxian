@@ -86,7 +86,7 @@ watch([elementX, elementY], () => {
         @mouseenter="enterhandler(i)"
         :class="{ active: i === activeIndex }"
       >
-        <img :src="img" alt="" />
+        <img v-img-lazy="img" alt="" />
       </li>
     </ul>
     <!-- 放大镜大图 -->

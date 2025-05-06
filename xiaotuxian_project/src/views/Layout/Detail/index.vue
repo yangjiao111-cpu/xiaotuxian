@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getGoodsDeatilAPI } from "@/apis/detail.js";
 import { useCartStore } from "@/stores/cartStore.js";
-import { useRoute, useRouter } from "vue-router";
+import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
@@ -43,6 +43,10 @@ const addCart = () => {
     ElMessage.warning("请选择规格");
   }
 };
+// 点击热榜中的商品时路由更新，用路由守卫来完成界面更新
+onBeforeRouteUpdate((to) => {
+  getGoodsDetail(to.params.id);
+});
 </script>
 
 <template>
@@ -124,7 +128,7 @@ const addCart = () => {
               <!-- sku组件 -->
               <XtxSku :goods="goods" @change="skuChange" />
               <!-- 数据组件 -->
-              <el-input-number v-model="count" @change="countChange" />
+              <el-input-number v-model="count" />
               <!-- 按钮组件 -->
               <div>
                 <el-button size="large" class="btn" @click="addCart">

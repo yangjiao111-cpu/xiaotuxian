@@ -7,8 +7,6 @@ export const useCategoryStore = defineStore('category', () => {
         const res = await getCategoryAPI()
         categoryList.value = res.result
     }
-    console.log(categoryList);
-
     return {
         categoryList,
         getCategory
