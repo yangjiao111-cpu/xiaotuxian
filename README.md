@@ -1,10 +1,8 @@
 #### 项目技术栈
 
-![Snipaste_2025-05-18_17-22-31](C:\Users\杨娇\Pictures\project\Snipaste_2025-05-18_17-22-31.png)
+create-vue Pinia ElementPlus Vue3+Setup Vue-Router VueUse
 
 #### 项目亮点
-
-![Snipaste_2025-05-18_17-23-49](C:\Users\杨娇\Pictures\project\Snipaste_2025-05-18_17-23-49.png)
 
 1.基于业务逻辑的组件拆分思想
 
