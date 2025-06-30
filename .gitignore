@@ -1,1 +1,4 @@
 node_modules
+.bashrc
+package-lock.json
+package.json
