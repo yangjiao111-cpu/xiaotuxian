@@ -19,3 +19,8 @@ create-vue Pinia ElementPlus Vue3+Setup Vue-Router VueUse
 7.路由缓存问题处理
 
 8.支付宝第三方支付
+
+// 支付宝沙箱
+// 账号：scobys4865@sandbox.com
+// 密码：111111
+// 支付密码：111111
